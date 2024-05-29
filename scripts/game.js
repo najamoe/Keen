@@ -104,63 +104,31 @@ function resetGame() {
   backgroundSound.pause();
   points = 0;
   updatePointsDisplay();
-
-  // Reset the game map
+  playerPosition.x = Math.floor(Math.random() * mapWidth);
+  playerPosition.y = Math.floor(Math.random() * mapHeight);
   for (let y = 0; y < gameMap.length; y++) {
       for (let x = 0; x < gameMap[y].length; x++) {
           gameMap[y][x] = 'background';
       }
   }
-
-  // Place points and enemies
   placeRandomTiles('point', 10);
   placeRandomTiles('enemy', 5);
-
-  // Place the player
-  const playerX = Math.floor(Math.random() * mapWidth);
-  const playerY = Math.floor(Math.random() * mapHeight);
-  gameMap[playerY][playerX] = 'player';
-  playerPosition.x = playerX;
-  playerPosition.y = playerY;
-
-  drawMap(context);
+  gameMap[playerPosition.y][playerPosition.x] = 'player';
+  
+  // Start the game loop again
+  gameLoop(ctx);
 }
 
+
+
 function placeRandomTiles(tile, count) {
-  const visited = new Set();
-  const queue = [];
-
-  // Start with the player's position
-  const startX = playerPosition.x;
-  const startY = playerPosition.y;
-  visited.add(`${startX},${startY}`);
-  queue.push({ x: startX, y: startY });
-
-  while (queue.length > 0 && count > 0) {
-      const { x, y } = queue.shift();
+  for (let i = 0; i < count; i++) {
+      let x, y;
+      do {
+          x = Math.floor(Math.random() * mapWidth);
+          y = Math.floor(Math.random() * mapHeight);
+      } while (gameMap[y][x] !== 'background');
       gameMap[y][x] = tile;
-      count--;
-
-      // Shuffle the directions to visit neighbors randomly
-      const directions = [
-          { dx: 1, dy: 0 },  // Right
-          { dx: -1, dy: 0 }, // Left
-          { dx: 0, dy: 1 },  // Down
-          { dx: 0, dy: -1 }  // Up
-      ].sort(() => Math.random() - 0.5);
-
-      for (const { dx, dy } of directions) {
-          const nx = x + dx;
-          const ny = y + dy;
-
-          if (nx >= 0 && ny >= 0 && nx < mapWidth && ny < mapHeight) {
-              const key = `${nx},${ny}`;
-              if (!visited.has(key)) {
-                  visited.add(key);
-                  queue.push({ x: nx, y: ny });
-              }
-          }
-      }
   }
 }
 
