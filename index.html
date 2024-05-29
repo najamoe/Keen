@@ -4,12 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Little Blob</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <img src="./images/logo.png">
-    <button id="startButton">Start Game</button>
+  <header>
+    <img src="./images/logo.png" alt="Little Blob Logo" id="logo">
+  </header>
+
+  <section id="muteButtons">
+    <button id="muteBackgroundButton" onclick="toggleBackgroundMute()">Mute Background</button>
+    <button id="muteSoundButton" onclick="toggleSoundMute()">Mute Sound</button>
+  </section>
+
   <canvas id="gameCanvas"></canvas>
+
+
+  <section id="start">
+  <button id="startButton">
+    <img src="./images/play.png" alt="Start Button" id="startImage">
+  </button>
+</section>
+
+<section id="controls">
+  <i id ="pauseIcon" class="fa-solid fa-pause" style="color: #6e6e6e;" onclick="pauseGame()"></i>
+  <i id ="stopIcon" class="fa-solid fa-stop" style="color: #6e6e6e;" onclick="stopGame()"></i>
+  <i id ="playIcon" class="fa-solid fa-play" style="color: #707070; display: none;"></i>
+</section>
+
   <script type="module" src="./scripts/game.js"></script>
 </body>
 </html>

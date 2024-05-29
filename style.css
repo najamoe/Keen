@@ -1,14 +1,57 @@
-/* style.css */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #000;
-  }
-  
-  canvas {
-    border: 1px solid #fff;
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  margin-top: 20px; /* Customizable top margin */
+  margin-bottom: 20px; /* Customizable bottom margin */
+}
+
+header {
+  text-align: center;
+}
+
+#logo {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px; /* Customizable margin */
+}
+
+#muteButtons {
+  position: absolute;
+  top: 250px;
+  right: 100px;
+}
+
+canvas {
+  border-style: outset;
+  display: block;
+  margin: 0 auto;
+}
+
+#start {
+  display: flex; /* Use flexbox for horizontal arrangement */
+  justify-content: center; /* Center the icons horizontally */
+ 
+}
+
+#startButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#startImage {
+  width: 200px; 
+  height: auto;
+}
+
+#controls {
+  display: flex; /* Use flexbox for horizontal arrangement */
+  justify-content: center; /* Center the icons horizontally */
+ 
+}
+
+#controls i {
+  font-size: 44px; /* Adjust the font size of the icons */
+  margin: 0 10px; /* Add space between the icons */
+}
