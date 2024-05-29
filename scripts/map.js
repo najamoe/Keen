@@ -25,11 +25,11 @@ const gameMap = [
 
 
 function drawMap(ctx) {
-    // Gennemgå rækkerne i kortet
+    
     for (let y = 0; y < gameMap.length; y++) {
-        // Gennemgå fliserne i hver række
+        
         for (let x = 0; x < gameMap[y].length; x++) {
-            // Tjek hvilken type flise det er
+            
             switch (gameMap[y][x]) {
                 case 'path':
                     drawBlackTile(ctx, x * tileSize, y * tileSize, tileSize);
@@ -46,7 +46,7 @@ function drawMap(ctx) {
                 case 'enemy':                   
                     drawRedTile(ctx, x * tileSize, y * tileSize, tileSize);
                     break;
-                // Andre typer fliser kan tilføjes her
+                
             }
         }
     }
