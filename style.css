@@ -13,7 +13,7 @@ header {
 #logo {
   max-width: 100%;
   height: auto;
-  margin-bottom: 20px; /* Customizable margin */
+  margin-bottom: 20px; 
 }
 
 #muteButtons {
@@ -29,8 +29,8 @@ canvas {
 }
 
 #start {
-  display: flex; /* Use flexbox for horizontal arrangement */
-  justify-content: center; /* Center the icons horizontally */
+  display: flex; 
+  justify-content: center; 
  
 }
 
@@ -46,12 +46,31 @@ canvas {
 }
 
 #controls {
-  display: flex; /* Use flexbox for horizontal arrangement */
-  justify-content: center; /* Center the icons horizontally */
+  display: flex; 
+  justify-content: center; 
  
 }
 
 #controls i {
-  font-size: 44px; /* Adjust the font size of the icons */
-  margin: 0 10px; /* Add space between the icons */
+  font-size: 44px; 
+  margin: 0 10px; 
+}
+
+#points {
+  display: flex; 
+  justify-content: center; 
+  width: 200px;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #ffffff;
+  border: 2px solid #cccccc;
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #333333;
+  margin-top: 10px;
+}
+
+#pointsValue {
+  color: #e74c3c;
 }

@@ -37,6 +37,7 @@ startButton.addEventListener('click', async () => {
 
 
 let isPaused = false;
+let points = 0;
 
 const pauseGame = document.getElementById('pauseIcon'); // Get pause icon element
 pauseGame.addEventListener('click', async () => {
@@ -61,7 +62,8 @@ const stopGame = document.getElementById('stopIcon'); // Get stop icon element
 stopGame.addEventListener('click', async () => {
   isPaused = true; // Pause the game
   togglePlayPauseIcon(); // Show play icon
-  // Reset the game state, clear canvas, etc.
+  backgroundSound.pause();
+  
   // Stop background music
   if (backgroundSound) {
     backgroundSound.pause();
@@ -82,6 +84,27 @@ function togglePlayPauseIcon() {
   }
 }
 
+function updatePointsDisplay() {
+  const pointsValue = document.getElementById('pointsValue');
+  pointsValue.textContent = points;
+}
+
+function addPoints(value) {
+  points += value;
+  updatePointsDisplay();
+}
+
+function gameLost(){
+  //If the pointvalue is 0, the game is lost
+  
+  lostSound.play();
+
+  //Insert restart game button at the gameCanvas
+}
+
+
+let playerPosition = { x: 3, y: 3 }; // Set initial player position
+
 requestAnimationFrame(() => gameLoop(context)); 
 
 function gameLoop(ctx) { 
@@ -97,24 +120,43 @@ function gameLoop(ctx) {
 document.addEventListener('keydown', handleKeyDown);
 
 function handleKeyDown(event) {
+  if (isPaused) return; // Ignore key presses if the game is paused
+
+  let newX = playerPosition.x;
+  let newY = playerPosition.y;
+
   switch(event.key) {
     case 'ArrowUp':
-      movePlayer('up');
+      newY--;
       break;
     case 'ArrowDown':
-      movePlayer('down');
+      newY++;
       break;
     case 'ArrowLeft':
-      movePlayer('left');
+      newX--;
       break;
     case 'ArrowRight':
-      movePlayer('right');
+      newX++;
       break;
     case ' ':
       shoot();
-      break;
+      return;
     default:
-      // Ignore other key presses
-      break;
+     
+      return;
+  }
+
+  if (newX >= 0 && newY >= 0 && newX < gameMap[0].length && newY < gameMap.length) {
+    // Check the tile the player is moving to
+    const tile = gameMap[newY][newX];
+    if (tile === 'point') {
+      addPoints(1);
+      gameMap[newY][newX] = 'path'; // Clear the point from the map
+    } else if (tile === 'enemy') {
+      addPoints(-1);
+    }
+    playerPosition.x = newX;
+    playerPosition.y = newY;
+    drawMap(context);
   }
 }
