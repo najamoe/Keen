@@ -1,6 +1,3 @@
-// sound.js
-
-// Define a function to load a sound file
 function loadSound(url) {
     return new Promise((resolve, reject) => {
         const audio = new Audio();
@@ -34,6 +31,24 @@ async function loadLostSound() {
     return await loadSound('./sounds/lost.wav');
 }
 
+function toggleBackgroundMute() {
+    if (backgroundSound) {
+      isBackgroundMuted = !isBackgroundMuted; 
+      backgroundSound.volume = isBackgroundMuted ? 0 : 0.5; 
+    }
+  }
+  
 
+  function toggleSoundMute() {
+    isSoundMuted = !isSoundMuted; 
+    // Mute or unmute other sounds based on the value of isSoundMuted
+    playerMoveSound.volume = isSoundMuted ? 0 : 1;
+    pointSound.volume = isSoundMuted ? 0 : 1;
+    enemySound.volume = isSoundMuted ? 0 : 1;
+    wonSound.volume = isSoundMuted ? 0 : 1;
+    lostSound.volume = isSoundMuted ? 0 : 1;
+  }
 
-export { loadBackgroundSound ,loadPlayerMoveSound, loadPointSound, loadEnemySound, loadWonSound, loadLostSound };
+export { loadBackgroundSound ,loadPlayerMoveSound, loadPointSound, loadEnemySound, loadWonSound, loadLostSound,
+        toggleBackgroundMute, toggleSoundMute
+ };

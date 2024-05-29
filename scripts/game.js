@@ -1,4 +1,5 @@
-import { drawMap, imageNames, gameMap } from './map.js'; // Import drawMap instead of loadImages
+import { drawMap, imageNames, gameMap } from './map.js'; 
+import { loadBackgroundSound ,loadPlayerMoveSound, loadPointSound, loadEnemySound, loadWonSound, loadLostSound, toggleBackgroundMute, toggleSoundMute } from './sound.js';
 
 const canvas = document.getElementById('gameCanvas');
 const context = canvas.getContext('2d');
@@ -11,11 +12,84 @@ const canvasHeight = 450;
 canvas.width = canvasWidth;
 canvas.height = canvasHeight;
 
-requestAnimationFrame(() => gameLoop(context)); // Pass context here
+let backgroundSound;
+let playerMoveSound;
+let pointSound;
+let enemySound;
+let wonSound;
+let lostSound;
+let isBackgroundMuted = false; 
+let isSoundMuted = false; 
 
-function gameLoop(ctx) { // Add ctx as a parameter
+const startButton = document.getElementById('startButton');
+startButton.addEventListener('click', async () => {
+    backgroundSound = await loadBackgroundSound();
+    backgroundSound.loop = true;
+    backgroundSound.volume = 0.1;
+    backgroundSound.play();
+    
+    playerMoveSound = await loadPlayerMoveSound();
+    pointSound = await loadPointSound();
+    enemySound = await loadEnemySound();
+    wonSound = await loadWonSound();
+    lostSound = await loadLostSound();
+});
+
+
+let isPaused = false;
+
+const pauseGame = document.getElementById('pauseIcon'); // Get pause icon element
+pauseGame.addEventListener('click', async () => {
+  isPaused = !isPaused; 
+  togglePlayPauseIcon(); // Toggle play/pause icon
+  if (isPaused) {
+    // Pause the game logic or animations
+    // Stop background music
+    if (backgroundSound) {
+      backgroundSound.pause();
+    }
+  } else {
+    // Resume the game logic or animations
+    // Resume background music if it was muted before
+    if (!isBackgroundMuted && backgroundSound) {
+      backgroundSound.play();
+    }
+  }
+});
+
+const stopGame = document.getElementById('stopIcon'); // Get stop icon element
+stopGame.addEventListener('click', async () => {
+  isPaused = true; // Pause the game
+  togglePlayPauseIcon(); // Show play icon
+  // Reset the game state, clear canvas, etc.
+  // Stop background music
+  if (backgroundSound) {
+    backgroundSound.pause();
+    backgroundSound.currentTime = 0; // Rewind the background music to the beginning
+  }
+  // Additional actions to reset the game
+});
+
+function togglePlayPauseIcon() {
+  const pauseIcon = document.getElementById('pauseIcon');
+  const playIcon = document.getElementById('playIcon');
+  if (isPaused) {
+    pauseIcon.style.display = 'none'; 
+    playIcon.style.display = 'inline-block'; 
+  } else {
+    pauseIcon.style.display = 'inline-block'; 
+    playIcon.style.display = 'none'; 
+  }
+}
+
+requestAnimationFrame(() => gameLoop(context)); 
+
+function gameLoop(ctx) { 
   ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-  drawMap(ctx); // Pass ctx here
+  drawMap(ctx); 
+  if (!isBackgroundMuted && backgroundSound) {
+    backgroundSound.play();
+}
   console.log('Gameloop running');
 }
 
@@ -44,4 +118,3 @@ function handleKeyDown(event) {
       break;
   }
 }
-
