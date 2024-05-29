@@ -39,7 +39,7 @@ startButton.addEventListener('click', async () => {
 let isPaused = false;
 let points = 0;
 
-const pauseGame = document.getElementById('pauseIcon'); // Get pause icon element
+const pauseGame = document.getElementById('pauseIcon'); 
 pauseGame.addEventListener('click', async () => {
   isPaused = !isPaused; 
   togglePlayPauseIcon(); // Toggle play/pause icon
