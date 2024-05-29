@@ -41,17 +41,25 @@ function drawMap(ctx) {
                     drawWhiteTile(ctx, x * tileSize, y * tileSize, tileSize);
                     break;
                 case 'point':
-                    drawGreenTile(ctx, x * tileSize, y * tileSize, tileSize);
+                    // Draw points only if the player has encountered them
+                    if (playerPosition.x === x && playerPosition.y === y) {
+                        drawGreenTile(ctx, x * tileSize, y * tileSize, tileSize);
+                    }
                     break;
                 case 'player':
                     drawBlueTile(ctx, x * tileSize, y * tileSize, tileSize);
                     break;
                 case 'enemy':
-                    drawRedTile(ctx, x * tileSize, y * tileSize, tileSize);
+                    // Draw enemies only if the player has encountered them
+                    if (playerPosition.x === x && playerPosition.y === y) {
+                        drawRedTile(ctx, x * tileSize, y * tileSize, tileSize);
+                    }
                     break;
             }
         }
     }
 }
+
+
 
 export { gameMap, drawMap, playerPosition };
